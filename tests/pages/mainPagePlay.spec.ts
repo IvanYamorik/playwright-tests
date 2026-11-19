@@ -1,29 +1,26 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect } from '../fixtures/mainPagePlay';
 import { MainPagePlay } from '../models/MainPagePlay';
 
-let mainPage: MainPagePlay;
-
 test.describe('Тесты главной страницы', () => {
-  test.beforeEach(async ({ page }) => {
-    mainPage = new MainPagePlay(page);
-    await mainPage.openMainPage();
-  });
+  // beforeEach удален т.к. выполняется на уровне Фикстуры
+  // в Фикстуре создаем экземпляр класса MainPagePlay и открываем страницу
+
   //1 done
-  test('Проверка отображения элементов навигации хедера', async () => {
+  test('Проверка отображения элементов навигации хедера', async ({ mainPage }) => {
     await mainPage.checkElementsVisability();
   });
 
   //2 done
-  test('Проверка названия элементов навигации хедера', async () => {
+  test('Проверка названия элементов навигации хедера', async ({ mainPage }) => {
     await mainPage.checkElementsText();
   });
 
   //3 done
-  test('Проверка атрибутов href элементов навигации хедера', async () => {
+  test('Проверка атрибутов href элементов навигации хедера', async ({ mainPage }) => {
     await mainPage.checkElementsHrefAttribute();
   });
 
-  test('Проверка переключения в dark mode', async () => {
+  test('Проверка переключения в dark mode', async ({ mainPage }) => {
     await test.step('Нажатие на иконку переключения лайт мода', async () => {
       mainPage.clickSwitchLightModeIcon();
       mainPage.clickSwitchLightModeIcon();
@@ -33,7 +30,7 @@ test.describe('Тесты главной страницы', () => {
     });
   });
 
-  test(`Проверка стилей со светлой темой страницы`, async () => {
+  test(`Проверка стилей со светлой темой страницы`, async ({ mainPage }) => {
     await test.step('Установка светлой темы', async () => {
       await mainPage.setLightMode();
     });
@@ -42,7 +39,7 @@ test.describe('Тесты главной страницы', () => {
     });
   });
 
-  test(`Проверка стилей с темной темой страницы`, async () => {
+  test(`Проверка стилей с темной темой страницы`, async ({ mainPage }) => {
     await test.step('Установка темной темы', async () => {
       await mainPage.setDarkMode();
     });
